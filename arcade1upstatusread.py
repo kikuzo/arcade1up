@@ -26,8 +26,8 @@ def switch_callback(self):
         return
     requests.post(WEB_HOOK_URL, data = json.dumps({
         'text': u'エマージェンシーボタンが押されました。\n \
-        応答を返す場合には <http://172.31.27.241/reply_led |応答(未実装) > をクリックしてください。\n \
-        エマージェンシー状態をクリアする場合は <http://172.31.27.241/clear_led |クリア(未実装) > をクリックしてください。',
+        応答を返す場合には <http://xxx.xxx.xxx.xxx/reply_led |応答(未実装) > をクリックしてください。\n \
+        エマージェンシー状態をクリアする場合は <http://xxx.xxx.xxx.xxx/clear_led |クリア(未実装) > をクリックしてください。',
         'username': u'arcade1up_watcherbot',
         'icon_emoji': u':smile_cat:',
         'link_names': 1,
