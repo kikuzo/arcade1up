@@ -40,13 +40,11 @@ class GreetingHandler(BaseHTTPRequestHandler):
             GPIO.output(PIN_LED_RESPONSED, GPIO.LOW)
             GPIO.output(PIN_LED_ON, GPIO.HIGH)
 
-
         self.send_response(200)
         self.send_header('Content-Type', 'text/plain')
         self.end_headers()
 
         self.wfile.write(b'OK.\r\n')
-
 
 class ThreadedHTTPServer(ThreadingMixIn, HTTPServer):
     """マルチスレッド化した HTTPServer"""
@@ -59,10 +57,8 @@ PIN_LED_ON = 23
 PIN_LED_RESPONSED =24
 PIN_TESTBUTTON = 25
 
-# times-s_kikuchi
-#WEB_HOOK_URL = "https://hooks.slack.com/services/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"
 # archade1up
-WEB_HOOK_URL = "https://hooks.slack.com/services/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"
+WEB_HOOK_URL = "https://hooks.slack.com/services/XXXX/YYYYY"
 
 LOW = 0
 HIGH = 1
@@ -85,16 +81,12 @@ def switch_callback(self):
     GPIO.output(PIN_LED_RESPONSED, GPIO.LOW)
     requests.post(WEB_HOOK_URL, data = json.dumps({
         'text': u'エマージェンシーボタンが押されました。\n \
-        応答を返す場合には <http://172.31.27.241:8001/setBreath |応答 > をクリックしてください。\n \
-        エマージェンシー状態をクリアする場合は <http://172.31.27.241:8001/clear_LED |クリア > をクリックしてください。',
+        応答を返す場合には <http://X.Y.Z.A:8001/setBreath |応答 > をクリックしてください。\n \
+        エマージェンシー状態をクリアする場合は <http://X.Y.Z.A:8001/clear_LED |クリア > をクリックしてください。',
         'username': u'arcade1up_watcherbot',
         'icon_emoji': u':smile_cat:',
         'link_names': 1,
     }))
-    #if GPIO.input(PIN_TESTBUTTON) == GPIO.LOW:
-    #    print("テストボタン押下")
-    #    GPIO.output(PIN_LED_ON, GPIO.HIGH)
-    #    #GPIO.output(PIN_LED_RESPONSED, GPIO.LOW)
     return
 
 def power_status_check(repeat_count, last_status):
@@ -120,7 +112,7 @@ def power_status_check(repeat_count, last_status):
 GPIO.add_event_detect(PIN_EMERGENCY, GPIO.RISING, bouncetime=100)
 GPIO.add_event_callback(PIN_EMERGENCY, switch_callback)
 
-server_address = ('172.31.27.241', 8001)
+server_address = ('X.Y.Z.A', 8001)
 httpd = ThreadedHTTPServer(server_address, GreetingHandler)
 httpd.serve_forever()
 
@@ -146,4 +138,3 @@ try:
         time.sleep(0.1)
 except KeyboardInterrupt:
     GPIO.cleanup()
-
